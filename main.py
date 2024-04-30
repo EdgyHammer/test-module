@@ -42,8 +42,12 @@ class MinimalTest(interactions.Extension):
         description="Replace here for the group command descriptions"
     )
 
+    test_variable=1
+    '''
     def __init__(self) -> None:
         self.test_variable:int=1
+    '''
+    
 
     @module_group.subcommand("ping", sub_cmd_description="Replace the description of this command")
     @interactions.slash_option(
