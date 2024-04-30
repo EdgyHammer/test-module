@@ -1,0 +1,7 @@
+## modified to make a minimal test
+
+# tests including:
+
+- importing from external .py file
+
+- usage of internal and external variable/constant

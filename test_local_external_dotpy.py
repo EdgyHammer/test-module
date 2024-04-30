@@ -15,5 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 '''
-def internal_t_testfunc():
-    print("Hello Internal_t_testfunc!")
+TEST_EXTERNAL_CONSTANT=2
+
+def external_py_func():
+    print("External py file loaded!")

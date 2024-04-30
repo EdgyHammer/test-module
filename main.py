@@ -19,7 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 '''
 import interactions
 # Use the following method to import the internal module in the current same directory
-from . import internal_t
+from . import test_local_external_dotpy
 # Import the os module to get the parent path to the local files
 import os
 # aiofiles module is recommended for file operation
@@ -42,6 +42,9 @@ class ModuleName(interactions.Extension):
         description="Replace here for the group command descriptions"
     )
 
+    def __init__(self) -> None:
+        self.test_variable:int=1
+
     @module_group.subcommand("ping", sub_cmd_description="Replace the description of this command")
     @interactions.slash_option(
         name = "option_name",
@@ -51,40 +54,12 @@ class ModuleName(interactions.Extension):
     )
     async def module_group_ping(self, ctx: interactions.SlashContext, option_name: str):
         await ctx.send(f"Pong {option_name}!")
-        internal_t.internal_t_testfunc()
+        test_local_external_dotpy.external_py_func()
 
-    @module_base.subcommand("pong", sub_cmd_description="Replace the description of this command")
-    @interactions.slash_option(
-        name = "option_name",
-        description = "Option description",
-        required = True,
-        opt_type = interactions.OptionType.STRING
-    )
-    async def module_group_pong(self, ctx: interactions.SlashContext, option_name: str):
-        # The local file path is inside the directory of the module's main script file
-        async with aiofiles.open(f"{os.path.dirname(__file__)}/example_file.txt") as afp:
-            file_content: str = await afp.read()
-        await ctx.send(f"Pong {option_name}!\nFile content: {file_content}")
-        internal_t.internal_t_testfunc()
+    @module_group.subcommand("print_test_module_variable",sub_cmd_description="Replace the description of this command")
+    async def print_test_module_variable(self, ctx: interactions.SlashContext):
+        await ctx.send(f"{test_local_external_dotpy.TEST_EXTERNAL_CONSTANT}")
 
-    @interactions.listen(MessageCreate)
-    async def on_messagecreate(self, event: MessageCreate):
-        '''
-        Event listener when a new message is created
-        '''
-        print(f"User {event.message.author.display_name} sent '{event.message.content}'")
-
-    # You can even create a background task to run as you wish.
-    # Refer to https://interactions-py.github.io/interactions.py/Guides/40%20Tasks/ for guides
-    # Refer to https://interactions-py.github.io/interactions.py/API%20Reference/API%20Reference/models/Internal/tasks/ for detailed APIs
-    @Task.create(IntervalTrigger(minutes=1))
-    async def task_everyminute(self):
-        channel: interactions.TYPE_MESSAGEABLE_CHANNEL = self.bot.get_guild(1234567890).get_channel(1234567890)
-        await channel.send("Background task send every one minute")
-        print("Background Task send every one minute")
-
-    # The command to start the task
-    @module_base.subcommand("start_task", sub_cmd_description="Start the background task")
-    async def module_base_starttask(self, ctx: interactions.SlashContext):
-        self.task_everyminute.start()
-        await ctx.send("Task started")
+    @module_group.subcommand("print_test_inner_variable",sub_cmd_description="Replace the description of this command")
+    async def print_test_module_variable(self, ctx: interactions.SlashContext):
+        await ctx.send(f"{self.test_variable}")
