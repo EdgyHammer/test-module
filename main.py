@@ -32,13 +32,13 @@ from interactions import Task, IntervalTrigger
 '''
 Replace the ModuleName with any name you'd like
 '''
-class ModuleName(interactions.Extension):
+class MinimalTest(interactions.Extension):
     module_base: interactions.SlashCommand = interactions.SlashCommand(
-        name="replace_your_command_base_here",
+        name="a_minimal_test_base",
         description="Replace here for the base command descriptions"
     )
     module_group: interactions.SlashCommand = module_base.group(
-        name="replace_your_command_group_here",
+        name="a_minimal_test_group",
         description="Replace here for the group command descriptions"
     )
 
